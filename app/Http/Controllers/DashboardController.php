@@ -8,7 +8,8 @@ class DashboardController extends Controller
 {
     public function index() {
 
-
-        return view('dashboard.index');
+        // onetomany returns the inventories the user has
+        $inventories = auth()->user()->inventories;
+        return view('dashboard.index', compact('inventories'));
     }
 }

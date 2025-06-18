@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Inventory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\InventoryFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,10 +19,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'PaymentServiceProvider User',
+        $user = User::factory()->create([
             'email' => 'test@example.com',
-            'password' => Hash::make('password'),
+            'password' => bcrypt('password'),
+        ]);
+
+        // Create 10 inventory items for that user
+        Inventory::factory()->count(10)->create([
+            'user_id' => $user->id,
         ]);
     }
 }
